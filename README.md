@@ -17,3 +17,7 @@ Convert to PDF
 ```bash
 python3 to_pdf.py <input_html_path> <output_pdf_path>
 ```
+
+## Example Output
+![Resume Template Page 1](images/resume_template_page_1.jpg)
+![Resume Template Page 2](images/resume_template_page_2.jpg)
