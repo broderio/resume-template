@@ -1,0 +1,4 @@
+*.pdf
+.DS_Store
+venv/
+my_resume.html
