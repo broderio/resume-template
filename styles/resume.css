@@ -1,0 +1,525 @@
+/* ============================================================
+   Modern Software Engineering Resume
+   ============================================================ */
+
+:root {
+  /* Palette: restrained ink, slate, and electric blue */
+  --color-text: #263244;
+  --color-heading: #101827;
+  --color-muted: #64748b;
+  --color-accent: #2563eb;
+  --color-accent-hover: #1d4ed8;
+  --color-rule: #dbe3ee;
+  --color-page: #ffffff;
+  --color-body: #ffffff;
+  --color-tint: #f5f8fc;
+
+  /* Typography */
+  --font-family-main:
+    Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+
+  --font-size-base: 9pt;
+  --font-size-name: 32pt;
+  --font-size-section: 11pt;
+  --font-size-small: 8pt;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Letter page */
+  --page-width: 216mm;
+  --page-height: 279mm;
+
+  --page-padding-top: 13mm;
+  --page-padding-right: 16mm;
+  --page-padding-bottom: 13mm;
+  --page-padding-left: 16mm;
+
+  /* Rhythm */
+  --spacing-xs: 1mm;
+  --spacing-sm: 2mm;
+  --spacing-md: 3mm;
+  --spacing-lg: 4.5mm;
+  --spacing-xl: 6mm;
+
+  --margin-indent: 0;
+  --list-indent: 4.2mm;
+  --list-padding-horizontal: 1.2mm;
+  --contact-gap: 4mm;
+
+  /* Details */
+  --border-width: 0.25mm;
+  --border-radius: 1.5mm;
+  --text-underline-offset: 2px;
+}
+
+/* ============================================================
+   Document Setup
+   ============================================================ */
+
+@page {
+  size: Letter;
+  margin: 13mm 16mm 13mm 16mm;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--color-body);
+}
+
+body {
+  width: var(--page-width);
+  min-height: var(--page-height);
+  margin: 0 auto;
+
+  background: var(--color-body);
+  color: var(--color-text);
+
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: 1.42;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/*
+ * The page element acts as the document container.
+ * Physical page dimensions and margins are handled by @page.
+ */
+page {
+  display: block;
+  position: relative;
+
+  width: 100%;
+  min-height: 0;
+  height: auto;
+
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  background: var(--color-page);
+
+  break-inside: auto;
+  page-break-inside: auto;
+}
+
+page[size="Letter"] {
+  width: 100%;
+  min-height: 0;
+}
+
+/* ============================================================
+   Header
+   ============================================================ */
+
+.resume-header {
+  margin: 0 0 var(--spacing-xl);
+  padding: 0 0 4mm;
+
+  border-bottom: 1.1mm solid var(--color-heading);
+  text-align: left;
+}
+
+.resume-name {
+  margin: 0 0 2mm;
+
+  color: var(--color-heading);
+  font-size: var(--font-size-name);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.04;
+  letter-spacing: -0.9pt;
+}
+
+/* ============================================================
+   Contact Row
+   ============================================================ */
+
+.contact-info {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 1.5mm var(--contact-gap);
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+  color: var(--color-muted);
+  font-size: var(--font-size-small);
+}
+
+.contact-info li {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.contact-info li:not(:last-child)::after {
+  content: "/";
+  margin-left: var(--contact-gap);
+  color: #a7b4c5;
+}
+
+.contact-info a {
+  color: var(--color-text);
+  text-decoration: none;
+  text-underline-offset: var(--text-underline-offset);
+}
+
+.contact-info a:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+/* ============================================================
+   Sections
+   ============================================================ */
+
+.section {
+  margin-bottom: var(--spacing-lg);
+
+  break-inside: auto;
+  page-break-inside: auto;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+
+  margin: 0 0 var(--spacing-md);
+
+  color: var(--color-accent);
+  font-size: var(--font-size-section);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  letter-spacing: 1.25pt;
+  text-transform: uppercase;
+
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+.section-title::after {
+  content: "";
+  flex: 1;
+
+  height: var(--border-width);
+  background: var(--color-rule);
+}
+
+/* ============================================================
+   Experience, Projects, Education
+   ============================================================ */
+
+.experience-item,
+.project-item,
+.education-item {
+  margin-bottom: var(--spacing-md);
+
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 5mm;
+
+  margin: 0 0 0.6mm;
+
+  color: var(--color-heading);
+  font-size: var(--font-size-base);
+  line-height: 1.28;
+}
+
+.item-header .title {
+  font-weight: var(--font-weight-semibold);
+}
+
+.item-header .date {
+  flex: 0 0 auto;
+
+  color: var(--color-muted);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.item-subheader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 5mm;
+
+  margin: 0;
+
+  color: var(--color-muted);
+  font-size: var(--font-size-small);
+  line-height: 1.3;
+}
+
+.item-subheader .organization {
+  color: #40516a;
+  font-weight: var(--font-weight-semibold);
+}
+
+.item-subheader .location {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.item-header a,
+.item-subheader a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.item-header a:hover,
+.item-subheader a:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: var(--text-underline-offset);
+}
+
+/* ============================================================
+   Impact-Focused Bullets
+   ============================================================ */
+
+.item-details {
+  margin: 1.4mm 0 0 var(--list-indent);
+  padding: 0 var(--list-padding-horizontal);
+
+  color: var(--color-text);
+}
+
+.item-details li {
+  margin: 0 0 0.65mm;
+  padding-left: 0.5mm;
+
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.item-details li::marker {
+  color: var(--color-accent);
+}
+
+.item-details li:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================================
+   Skills
+   ============================================================ */
+
+.skills-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 1.2mm;
+
+  margin: 0;
+}
+
+.skill-category {
+  margin: 0;
+  line-height: 1.38;
+}
+
+.skill-category strong {
+  color: var(--color-heading);
+  font-weight: var(--font-weight-semibold);
+}
+
+.skill-separator {
+  display: inline-block;
+
+  margin: 0 1.5mm;
+
+  color: var(--color-accent);
+  font-weight: var(--font-weight-bold);
+}
+
+/* ============================================================
+   Text Sections
+   ============================================================ */
+
+.section-text {
+  margin: 0;
+  line-height: 1.48;
+}
+
+/* ============================================================
+   General Links
+   ============================================================ */
+
+a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 0.5px;
+  text-underline-offset: var(--text-underline-offset);
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+/* ============================================================
+   Utility Classes
+   ============================================================ */
+
+.page-break {
+  break-after: page;
+  page-break-after: always;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.normal {
+  font-weight: var(--font-weight-normal);
+}
+
+/* ============================================================
+   Screen Preview
+   ============================================================ */
+
+@media screen {
+  html {
+    background: var(--color-body);
+  }
+
+  body {
+    width: var(--page-width);
+    background: var(--color-body);
+  }
+
+  page {
+    width: var(--page-width);
+    min-height: var(--page-height);
+
+    margin: 0 auto 8mm;
+
+    padding: var(--page-padding-top) var(--page-padding-right)
+      var(--page-padding-bottom) var(--page-padding-left);
+
+    background: var(--color-page);
+  }
+
+  page[size="Letter"] {
+    width: var(--page-width);
+    min-height: var(--page-height);
+  }
+}
+
+/* ============================================================
+   Printing and PDF Pagination
+   ============================================================ */
+
+@media print {
+  /*
+   * @page applies the margins to every physical page,
+   * including pages created through automatic overflow.
+   */
+  @page {
+    size: Letter;
+    margin: 13mm 16mm 13mm 16mm;
+  }
+
+  html,
+  body,
+  page {
+    width: auto;
+    min-height: 0;
+
+    margin: 0;
+    padding: 0;
+
+    background: white !important;
+  }
+
+  page {
+    height: auto;
+  }
+
+  /*
+   * Preserve printed colors and backgrounds.
+   */
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /*
+   * Preserve natural content flow across pages.
+   */
+  .section {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  /*
+   * Keep section headings with following content.
+   */
+  .section-title {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  /*
+   * Keep individual entries together where possible.
+   */
+  .experience-item,
+  .project-item,
+  .education-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /*
+   * Avoid splitting individual bullets.
+   */
+  .item-details li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /*
+   * Prevent isolated lines.
+   */
+  p,
+  li {
+    orphans: 2;
+    widows: 2;
+  }
+
+  /*
+   * Remove hyperlink styling for print.
+   */
+  .contact-info a,
+  .item-header a,
+  .item-subheader a {
+    color: inherit;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}

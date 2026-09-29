@@ -1,1 +1,3 @@
 pytest-playwright
+jinja2
+pyyaml

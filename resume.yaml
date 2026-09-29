@@ -1,0 +1,101 @@
+resume:
+  name: Firstname Lastname
+  title: Firstname Lastname - Resume
+  page_size: Letter
+  contact:
+    - label: myemail@gmail.com
+      url: mailto:myemail@gmail.com
+    - label: mywebsite.com
+      url: https://mywebsite.com
+    - label: linkedin.com/in/mylinkedin
+      url: https://linkedin.com/in/mylinkedin
+    - label: github.com/mygithub
+      url: https://github.com/mygithub
+
+sections:
+  - title: Experience
+    template: items
+    item_class: experience-item
+    items:
+      - title: Position Title
+        subtitle: Organization A
+        date: Month Year – Month Year
+        location: City, State
+        details:
+          - Lorem ipsum dolor sit amet consectetur adipiscing elit.
+          - Sit amet consectetur adipiscing elit quisque faucibus ex.
+          - Adipiscing elit quisque faucibus ex sapien vitae pellentesque.
+
+      - title: Position Title
+        subtitle: Organization B
+        date: Month Year – Month Year
+        location: City, State
+        details:
+          - Lorem ipsum dolor sit amet consectetur adipiscing elit.
+          - Sit amet consectetur adipiscing elit quisque faucibus ex.
+          - Adipiscing elit quisque faucibus ex sapien vitae pellentesque.
+
+      - title: Position Title
+        subtitle: Organization C
+        date: Month Year – Month Year
+        location: City, State
+        details:
+          - Lorem ipsum dolor sit amet consectetur adipiscing elit.
+          - Sit amet consectetur adipiscing elit quisque faucibus ex.
+          - Adipiscing elit quisque faucibus ex sapien vitae pellentesque.
+
+      - title: Position Title
+        subtitle: Organization D
+        date: Month Year – Month Year
+        location: City, State
+        details:
+          - Lorem ipsum dolor sit amet consectetur adipiscing elit.
+          - Sit amet consectetur adipiscing elit quisque faucibus ex.
+          - Adipiscing elit quisque faucibus ex sapien vitae pellentesque.
+
+  - title: Education
+    template: items
+    item_class: education-item
+    items:
+      - title: My University
+        subtitle: My Degree in My Major
+        date: Month Year – Month Year
+        location: City, State
+        details:
+          - Lorem ipsum dolor sit amet consectetur adipiscing elit.
+
+  - title: Projects
+    template: items
+    item_class: project-item
+    items:
+      - title: Project A
+        subtitle: project.example.com
+        subtitle_url: https://project.example.com
+        date: Month Year – Month Year
+        details:
+          - Lorem ipsum dolor sit amet consectetur adipiscing elit.
+          - Sit amet consectetur adipiscing elit quisque faucibus ex.
+          - Adipiscing elit quisque faucibus ex sapien vitae pellentesque.
+
+      - title: Project B
+        subtitle: github.com/mygithub/project
+        subtitle_url: https://github.com/mygithub/project
+        date: Month Year – Month Year
+        details:
+          - Built a project demonstrating an interesting technical capability.
+          - Implemented the core functionality using Python.
+          - Documented the project and created automated tests.
+
+  - title: Technical Skills
+    template: skills
+    items:
+      - category: Languages
+        skills: Python, Java, C++, JavaScript, SQL
+      - category: Frameworks
+        skills: Django, Flask, React, FastAPI
+      - category: Tools
+        skills: Git, Docker, Linux, PostgreSQL, AWS
+
+  - title: Additional Information
+    template: text
+    text: Additional information can be placed here.

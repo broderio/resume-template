@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ resume.get("title", resume["name"] ~ " - Resume") }}</title>
+
+    <style>
+    {{ css | safe }}
+
+    /* ============================================================
+    Pagination and Page Background Fixes
+    ============================================================ */
+
+    :root {
+    --page-width: 216mm;
+    --page-height: 279mm;
+
+    --page-padding-top: 6mm;
+    --page-padding-right: 8mm;
+    --page-padding-bottom: 6mm;
+    --page-padding-left: 8mm;
+    }
+
+    /*
+    * Physical page configuration.
+    *
+    * Margins are applied independently to EVERY physical page,
+    * including pages created by automatic content overflow.
+    */
+    @page {
+    size: Letter;
+    margin:
+    var(--page-padding-top)
+    var(--page-padding-right)
+    var(--page-padding-bottom)
+    var(--page-padding-left);
+    }
+
+    html,
+    body {
+    margin: 0;
+    padding: 0;
+    }
+
+    html {
+    background: var(--color-body);
+    }
+
+    body {
+    width: auto;
+    min-height: 100vh;
+    margin: 0 auto;
+
+    background: var(--color-body);
+    color: var(--color-text);
+
+    font-family: var(--font-family-main);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.42;
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    }
+
+    /*
+    * The page element is now a document container rather than
+    * a physical page with a fixed minimum height.
+    *
+    * Physical pagination is controlled by @page.
+    */
+    page {
+    display: block;
+    position: relative;
+
+    width: 100%;
+    min-height: 0;
+    height: auto;
+
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+    background: var(--color-page);
+
+    break-inside: auto;
+    page-break-inside: auto;
+    }
+
+    page[size="Letter"] {
+    width: 100%;
+    min-height: 0;
+    }
+
+    /*
+    * Preserve section headings with their following content.
+    */
+    .section-title {
+    break-after: avoid;
+    page-break-after: avoid;
+    }
+
+    .section {
+    break-inside: auto;
+    page-break-inside: auto;
+    }
+
+    /*
+    * Prevent individual entries from splitting across pages.
+    */
+    .experience-item,
+    .project-item,
+    .education-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    }
+
+    /*
+    * Avoid splitting individual bullets.
+    */
+    .item-details li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    }
+
+    /*
+    * Prevent isolated lines.
+    */
+    p,
+    li {
+    orphans: 2;
+    widows: 2;
+    }
+
+    /*
+    * Explicit page breaks.
+    */
+    .page-break {
+    break-after: page;
+    page-break-after: always;
+    }
+
+    /*
+    * Screen preview.
+    */
+    @media screen {
+    html {
+    background: var(--color-body);
+    }
+
+    body {
+    width: var(--page-width);
+    background: var(--color-body);
+    }
+
+    page {
+    width: var(--page-width);
+    min-height: var(--page-height);
+
+    margin: 0 auto 8mm;
+    padding:
+    var(--page-padding-top)
+    var(--page-padding-right)
+    var(--page-padding-bottom)
+    var(--page-padding-left);
+
+    background: var(--color-page);
+    }
+    }
+
+    /*
+    * PDF / Print rendering.
+    */
+    @media print {
+    html,
+    body {
+    width: auto;
+    min-height: 0;
+
+    margin: 0;
+    padding: 0;
+
+    background: white !important;
+    }
+
+    page {
+    width: auto;
+    min-height: 0;
+    height: auto;
+
+    margin: 0;
+    padding: 0;
+
+    background: white !important;
+    }
+
+    /*
+    * Ensure the final partially occupied page also has
+    * a white background.
+    */
+    *,
+    *::before,
+    *::after {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    }
+
+    .contact-info a,
+    .item-header a,
+    .item-subheader a {
+    color: inherit;
+    }
+
+    a {
+    text-decoration: none;
+    }
+    }
+    </style>
+</head>
+
+<body>
+
+    <page size="{{ resume.get("page_size", "Letter") }}">
+
+        <header class="resume-header">
+            <h1 class="resume-name">{{ resume["name"] }}</h1>
+
+            {% if resume.get("contact", []) %}
+                <ul class="contact-info">
+                    {% for contact in resume.get("contact", []) %}
+                        <li>
+                            {% if contact.get("url", "") %}
+                                <a href="{{ contact["url"] }}">
+                                    {{ contact["label"] }}
+                                </a>
+                            {% else %}
+                                {{ contact["label"] }}
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </header>
+
+        {% for section in sections %}
+
+            <section class="section">
+
+                <h2 class="section-title">
+                    {{ section["title"] }}
+                </h2>
+
+                {% if section.get("template", "items") == "items" %}
+
+                    {% for item in section.get("items", []) %}
+
+                        <article class="{{ section.get("item_class", "experience-item") }}">
+
+                            <div class="item-header">
+
+                                <span class="title">
+                                    {% if item.get("url", "") %}
+                                        <a href="{{ item["url"] }}">
+                                            {{ item["title"] }}
+                                        </a>
+                                    {% else %}
+                                        {{ item["title"] }}
+                                    {% endif %}
+                                </span>
+
+                                {% if item.get("date", "") %}
+                                    <span class="date">
+                                        {{ item["date"] }}
+                                    </span>
+                                {% endif %}
+
+                            </div>
+
+                            {% if item.get("subtitle", "") or item.get("location", "") %}
+
+                                <div class="item-subheader">
+
+                                    {% if item.get("subtitle", "") %}
+                                        <span class="organization">
+
+                                            {% if item.get("subtitle_url", "") %}
+                                                <a href="{{ item["subtitle_url"] }}">
+                                                    {{ item["subtitle"] }}
+                                                </a>
+                                            {% else %}
+                                                {{ item["subtitle"] }}
+                                            {% endif %}
+
+                                        </span>
+                                    {% endif %}
+
+                                    {% if item.get("location", "") %}
+                                        <span class="location">
+                                            {{ item["location"] }}
+                                        </span>
+                                    {% endif %}
+
+                                </div>
+
+                            {% endif %}
+
+                            {% if item.get("details", []) %}
+
+                                <ul class="item-details">
+                                    {% for detail in item.get("details", []) %}
+                                        <li>{{ detail | safe }}</li>
+                                    {% endfor %}
+                                </ul>
+
+                            {% endif %}
+
+                        </article>
+
+                    {% endfor %}
+
+                {% elif section.get("template", "items") == "skills" %}
+
+                    <div class="skills-list">
+
+                        {% for skill in section.get("items", []) %}
+
+                            <div class="skill-category">
+
+                                <strong>{{ skill["category"] }}</strong>
+
+                                <span class="skill-separator">·</span>
+
+                                <span>{{ skill["skills"] | safe }}</span>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% elif section.get("template", "items") == "text" %}
+
+                    {% if section.get("text", "") %}
+                        <p class="section-text">
+                            {{ section["text"] | safe }}
+                        </p>
+                    {% endif %}
+
+                    {% if section.get("items", []) %}
+                        <ul class="item-details">
+                            {% for item in section.get("items", []) %}
+                                <li>{{ item | safe }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                {% else %}
+
+                    {% for item in section.get("items", []) %}
+
+                        <article class="experience-item">
+
+                            <div class="item-header">
+                                <span class="title">
+                                    {{ item["title"] }}
+                                </span>
+                            </div>
+
+                            {% if item.get("details", []) %}
+                                <ul class="item-details">
+                                    {% for detail in item.get("details", []) %}
+                                        <li>{{ detail | safe }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+
+                        </article>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            </section>
+
+            {% if section.get("page_break_after", false) %}
+                <div class="page-break"></div>
+            {% endif %}
+
+        {% endfor %}
+
+    </page>
+
+</body>
+
+</html>
